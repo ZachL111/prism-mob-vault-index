@@ -1,0 +1,73 @@
+{
+  "repo": "prism-mob-vault-index",
+  "language": "Go",
+  "category": "Mobile workflows",
+  "goal": "Create a Go reference implementation for vault workflows, centered on state machine modeling, transition tables, and invalid-transition tests.",
+  "review_model": {
+    "terms": [
+      "form pressure",
+      "sync drift",
+      "local state",
+      "conflict cost"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "form pressure",
+      "signal": 44,
+      "slack": 52,
+      "drag": 23,
+      "confidence": 53,
+      "score": 124,
+      "lane": "watch"
+    },
+    {
+      "name": "stress",
+      "focus": "sync drift",
+      "signal": 79,
+      "slack": 24,
+      "drag": 24,
+      "confidence": 72,
+      "score": 182,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "local state",
+      "signal": 60,
+      "slack": 50,
+      "drag": 14,
+      "confidence": 76,
+      "score": 204,
+      "lane": "ship"
+    },
+    {
+      "name": "recovery",
+      "focus": "conflict cost",
+      "signal": 66,
+      "slack": 35,
+      "drag": 23,
+      "confidence": 65,
+      "score": 163,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "form pressure",
+      "signal": 79,
+      "slack": 40,
+      "drag": 10,
+      "confidence": 75,
+      "score": 243,
+      "lane": "ship"
+    }
+  ]
+}

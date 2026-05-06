@@ -1,69 +1,40 @@
 # prism-mob-vault-index
 
-`prism-mob-vault-index` is a Go project for Mobile workflows. It turns create a Go reference implementation for vault workflows, centered on state machine modeling, transition tables, and invalid-transition tests into a small local model with readable fixtures and a direct verification command.
+`prism-mob-vault-index` is a Go project in mobile workflows. Its focus is to create a Go reference implementation for vault workflows, centered on state machine modeling, transition tables, and invalid-transition tests.
 
-## Reading Prism Mob Vault Index
+## Problem It Tries To Make Smaller
 
-Start with the README, then open `metadata/project.json` to check the constants behind the examples. After that, `fixtures/cases.csv` shows the compact path and `examples/extended_cases.csv` gives a wider look at the same rule.
+I want this repository to be useful as a quick reading exercise: fixtures first, implementation second, verifier last.
 
-## Purpose
+## Prism Mob Vault Index Review Notes
 
-This is not a wrapper around a service. It is a self-contained project that shows how the model behaves when demand, capacity, latency, risk, and weight move in different directions.
+Start with `form pressure` and `form pressure`. Those cases create the widest score spread in this repo, so they are the best quick check when the model changes.
 
-## What It Does
+## Working Pieces
 
-- Models local state with deterministic scoring and explicit review decisions.
-- Uses fixture data to keep sync pressure changes visible in code review.
-- Includes extended examples for form constraints, including `recovery` and `degraded`.
-- Documents offline paths tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
+- `fixtures/domain_review.csv` adds cases for form pressure and sync drift.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/prism-mob-vault-walkthrough.md` walks through the case spread.
+- The Go code includes a review path for `form pressure` and `form pressure`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Design Sketch
+## Design Notes
 
-The interesting part is the boundary between accepted and reviewed scenarios. Extended examples sit near that boundary so future edits can show whether the model became more permissive or more cautious. The Go layout uses small packages and table-oriented tests so the behavior stays easy to follow.
+The repository has two validation layers: the original compact policy fixture and the domain review fixture. They are separate so one can change without hiding failures in the other.
 
-## Files Worth Reading
+The added Go path is deliberately direct, with fixtures doing most of the explaining.
 
-- `policy`: Go package with the core model
-- `cmd`: small command entry point
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-- `go.mod`: Go module metadata
-
-## Setup
-
-Clone the repository, enter the directory, and run the verifier. No database server, cloud account, or token is required.
-
-## Usage
+## Example Run
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Tests
 
-## Verification
+That command is also the regression path. It verifies the domain cases and catches mismatches between the CSV, metadata, and code.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
+## Known Limits
 
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Fixture Notes
-
-`examples/extended_cases.csv` adds six named cases. I kept the names plain so failures are easy to read in a terminal: baseline, pressure, surge, degraded, recovery, and boundary.
-
-## Limits
-
-This code is local-first. It makes no claim about deployed usage and avoids credentials, hosted state, and environment-specific setup.
-
-## Next Directions
-
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add one more mobile workflows fixture that focuses on a malformed or borderline input.
+This remains a local project with deterministic fixtures. It does not depend on credentials, hosted services, or live data. Future work should add richer malformed inputs before widening the public API.
